@@ -1,49 +1,46 @@
 const models = require('../models');
-/*
 
-const { Domo } = models;
+const { Drink } = models;
 
 const makerPage = async (req, res) => res.render('app');
 
-const makeDomo = async (req, res) => {
-  if (!req.body.name || !req.body.age) {
-    return res.status(400).json({ error: 'Both name and age are required!' });
+const makeDrink = async (req, res) => {
+  if (!req.body.name || !req.body.temperature) {
+    return res.status(400).json({ error: 'Both name and temperature are required!' });
   }
 
-  const domoData = {
+  const drinkData = {
     name: req.body.name,
-    age: req.body.age,
-    owner: req.session.account._id,
+    temperature: req.body.temperature,
+    owner: req.session.account_id,
   };
 
   try {
-    const newDomo = new Domo(domoData);
-    await newDomo.save();
-    return res.status(201).json({ name: newDomo.name, age: newDomo.age });
+    const newDrink = new Drink(drinkData);
+    await newDrink.save();
+    return res.status(201).json({ name: newDrink.name, temperature: newDrink.temperature });
   } catch (err) {
-    console.log(err);
     if (err.code === 11000) {
-      return res.status(400).json({ error: 'Domo already exists!' });
+      return res.status(400).json({ error: 'Drink already exists!' });
     }
-    return res.status(500).json({ error: 'An error occured making domo!' });
+    return res.status(500).json({ error: 'An error occured making drink!' });
   }
 };
 
-const getDomos = async (req, res) => {
+const getDrinks = async (req, res) => {
   try {
-    const query = { owner: req.session.account._id };
-    const docs = await Domo.find(query).select('name age').lean().exec();
+    const query = { owner: req.session.account_id };
+    const docs = await Drink.find(query).select('name temperature').lean().exec();
 
-    return res.json({ domos: docs });
+    return res.json({ drinks: docs });
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ error: 'Error retrieving domos!' });
+    return res.status(500).json({ error: 'Error retrieving drinks!' });
   }
 };
 
 module.exports = {
   makerPage,
-  makeDomo,
-  getDomos,
+  makeDrink,
+  getDrinks,
 };
-*/
