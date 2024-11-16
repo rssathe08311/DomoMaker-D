@@ -5,7 +5,7 @@ const { createRoot } = require('react-dom/client');
 
 const handleDrink = (e, onDrinkAdded) => {
     e.preventDefault();
-    helper.hideError();
+    helper.hideDrinkError();
 
     const name = e.target.querySelector('#drinkName').value;
     const temperature = e.target.querySelector('#drinkTemp').value;
@@ -15,7 +15,7 @@ const handleDrink = (e, onDrinkAdded) => {
         return false;
     }
 
-    helper.sendDrinkPost(e.target.action, {name, temperature}, onDrinkAdded);
+    helper.sendDrinkPost(e.target.action, { name, temperature }, onDrinkAdded);
     return false;
 }
 
@@ -59,10 +59,10 @@ const DrinkList = (props) => {
 
     const drinkNodes = drinks.map(drink => {
         return (
-            <div key={domo.id} className='drink'>
+            <div key={drink.id} className='drink'>
                 <img src='/assets/img/drink.png' alt="drink" className='drinkFace' />
                 <h3 className='drinkName'>Name: {drink.name}</h3>
-                <h3 className='drinkAge'>Age: {drink.temperature}</h3>
+                <h3 className='drinkAge'>Temperature: {drink.temperature}</h3>
             </div>
         );
     });
@@ -90,7 +90,7 @@ const App = () => {
 };
 
 const init = () => {
-    const root = createRoot(document.getElementById('app'));
+    const root = createRoot(document.getElementById('drink'));
     root.render( <App />);
 };
 

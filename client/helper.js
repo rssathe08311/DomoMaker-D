@@ -12,6 +12,7 @@ const handleDrinkError = (message) => {
   document.getElementById('drinkMessage').classList.remove('hidden');
 };
 
+
 /* Sends post requests to the server using fetch. Will look for various
    entries in the response JSON object, and will handle them appropriately.
 */
@@ -42,36 +43,44 @@ const sendPost = async (url, data, handler) => {
 
 const sendDrinkPost = async (url, data, handler) => {
   const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
   });
 
   const result = await response.json();
   document.getElementById('drinkMessage').classList.add('hidden');
 
-  if(result.redirect) {
-    window.location = result.redirect;
+  if (result.redirect) {
+      window.location = result.redirect;
   }
 
-  if(result.error) {
-    handleError(result.error);
+  if (result.error) {
+      handleDrinkError(result.error);
   }
 
-  if(handler) {
-    handler(result);
+  if (handler) {
+      handler(result);
   }
-}
+};
+
 
 const hideError = () => {
     document.getElementById('domoMessage').classList.add('hidden');
 };
 
 const hideDrinkError = () => {
-  document.getElementById('drinkMessage').classList.add('hidden');
+  const drinkMessage = document.getElementById('drinkMessage');
+  console.log('drinkMessage element:', drinkMessage);
+  if (!drinkMessage) {
+      console.error('drinkMessage element not found!');
+      return;
+  }
+  drinkMessage.classList.add('hidden');
 };
+
 
 module.exports = {
     handleError,

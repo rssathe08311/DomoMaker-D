@@ -11,10 +11,11 @@ const DrinkSchema = new mongoose.Schema({
     set: setName,
   },
   temperature: {
-    type: String,
+    type: Number,
     required: true,
     trim: true,
   },
+
   owner: {
     type: mongoose.Schema.ObjectId,
     required: true,
